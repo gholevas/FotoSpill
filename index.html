@@ -1,0 +1,64 @@
+<!doctype html>
+<html ng-app="FotoSpill">
+<head>
+
+	<meta charset="utf-8" />
+	<title>FotoSpill</title>
+	<link rel="stylesheet" href="style.css" />
+	<script src="angular.min.js"></script>
+	<script src="FotoSpill.js"></script>
+    <script type="text/javascript" src="//www.gstatic.com/cast/sdk/libs/receiver/2.0.0/cast_receiver.js"></script>
+  
+</head>
+
+
+
+
+<body ng-controller="slideshow" ng-class="loadingClass">
+
+
+    <h1>
+    <label id="message">To be featured on this screen</label>
+
+    <img src="instagram-logo.png" /> 
+    #<input id="tag" type="text" ng-model="tag" ng-change="tagChange()" ng-init="tag = 'apples'" size="{{ tag.length }}" />
+    </h1>
+
+
+
+	<ul id="slides">
+		<li ng-repeat="image in images" class="slide" ng-class="{ active : image.isActive }">
+			<figure>
+				<img ng-src="{{ image.images.standard_resolution.url }}" class="image" />
+			</figure>
+
+			<div class="meta">
+				<p class="caption">
+					<cite class="author">
+						<img ng-src="{{ image.user.profile_picture }}" width="40" height="40" /> 
+						{{ image.user.username }}
+					</cite> 
+					{{ image.caption.text }}
+
+				</p>
+				<p class="likes">
+					&hearts; {{ image.likes.count }} likes
+				</p>
+				<p>
+					Posted at
+					<mydate>{{image.created_time * 1000 | date:'hh:mm a'}}</mydate>
+				</p>
+				<!-- <ul class="comments">
+					<li class="comment" ng-repeat="comment in image.comments.data">
+						<cite class="author">
+							<img ng-src="{{ comment.from.profile_picture }}" width="40" height="40" /> 
+							{{ comment.from.username }}
+						</cite> 
+						{{ comment.text }}
+					</li>
+				</ul> -->
+			</div>
+		</li>
+	</ul>
+</body>
+</html>
