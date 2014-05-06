@@ -86,10 +86,9 @@ var FotoSpill = angular.module('FotoSpill', []);
 	FotoSpill.config(['$routeProvider', '$locationProvider', function( $routeProvider, $locationProvider ) {$routeProvider.when('/tag/:tag');}]);
   	FotoSpill.controller('slideshow', function ( $scope, $http, $timeout, $route, $location ) {
 			// Set the API endpoint
-			var api = 'https://api.instagram.com/v1/tags/%tag%/media/recent?access_token=257058201.9af4692.3d68e63b114944a0be332da732923a23&callback=JSON_CALLBACK',
+			var api = 'https://api.instagram.com/v1/locations/436022/media/recent?access_token=257058201.9af4692.3d68e63b114944a0be332da732923a23&callback=JSON_CALLBACK',
 				newReq, refreshApi;
 			var seconds = 1000;
-//'https://api.instagram.com/v1/locations/7223/media/recent?access_token=257058201.9af4692.3d68e63b114944a0be332da732923a23&callback=JSON_CALLBACK'
 
 
 			$scope.fetchImages = function() {
@@ -98,10 +97,10 @@ var FotoSpill = angular.module('FotoSpill', []);
 				$scope.imgCurrent = 0;
 
 
-				if ( ! $route.current )
-					$location.path( '/tag/' + $scope.tag );
-				else if ( angular.isDefined( $route.current.params.tag ) )
-					$scope.tag = $route.current.params.tag;
+				// if ( ! $route.current )
+				// 	$location.path( '/tag/' + $scope.tag );
+				// else if ( angular.isDefined( $route.current.params.tag ) )
+				// 	$scope.tag = $route.current.params.tag;
 
 				$http.jsonp( 
 					api.replace( '%tag%', $scope.tag )
@@ -120,7 +119,7 @@ var FotoSpill = angular.module('FotoSpill', []);
 
 					// Check for new images on every loop
 					if ( data.data.length )
-						refreshApi = $timeout( $scope.fetchImages, 88*seconds );
+						refreshApi = $timeout( $scope.fetchImages, 100*seconds );
 				}).error( function() {
 					delete $scope.loadingClass;
 					refreshApi = $timeout( $scope.fetchImages, 2*seconds );
@@ -137,7 +136,7 @@ var FotoSpill = angular.module('FotoSpill', []);
 					$scope.makeActiveSlide( $scope.imgCurrent + 1 );
 					
 
-				$timeout( $scope.advanceSlide, 8*seconds );  //time between slide transition
+				$timeout( $scope.advanceSlide, 10*seconds );  //time between slide transition
 			}
 
 			// Advance slides
